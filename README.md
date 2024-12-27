@@ -10,4 +10,6 @@
 ```shell
 export PYTHONPATH=<repo_dir>/src
 uvicorn gentrade-server.main:app --reload
+or
+python -m gentrade-server.main
 ```
