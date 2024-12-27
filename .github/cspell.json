@@ -12,6 +12,10 @@
     "dictionaries": [],
     "words": [
         "cnap",
-        "Dockerfile"
+        "Dockerfile",
+        "PYTHONPATH",
+        "uvicorn",
+        "Pylint",
+        "gentrade"
     ]
 }
