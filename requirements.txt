@@ -1,2 +1,6 @@
 fastapi[standard]
 uvicorn
+pydantic
+pydantic-settings
+ntplib
+python-dateutil
