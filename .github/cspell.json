@@ -16,6 +16,8 @@
         "PYTHONPATH",
         "uvicorn",
         "Pylint",
-        "gentrade"
+        "gentrade",
+        "aliyuncs",
+        "kenplusplus"
     ]
 }
