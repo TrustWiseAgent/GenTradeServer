@@ -13,3 +13,9 @@ uvicorn gentrade-server.main:app --reload
 or
 python -m gentrade-server.main
 ```
+
+- Run from docker
+
+```shell
+docker run -p 8000:8000 registry.cn-hangzhou.aliyuncs.com/kenplusplus/gentrade_server
+```
