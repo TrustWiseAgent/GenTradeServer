@@ -1,0 +1,17 @@
+{
+    "version": "0.2",
+    "ignorepaths": [
+        ".github/",
+        ".git/"
+    ],
+    "ignorewords": [],
+    "useGitignore": true,
+    "language": "en",
+    "import": [],
+    "dictionarydefinitions": [],
+    "dictionaries": [],
+    "words": [
+        "cnap",
+        "Dockerfile"
+    ]
+}
