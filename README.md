@@ -1,5 +1,7 @@
-# GenTrade Server
+[![Document Scan](https://github.com/TrustWiseAgent/GenTradeServer/actions/workflows/doclint.yml/badge.svg)](https://github.com/TrustWiseAgent/GenTradeServer/actions/workflows/doclint.yml)
+[![Pylint Scan](https://github.com/TrustWiseAgent/GenTradeServer/actions/workflows/pylint.yml/badge.svg)](https://github.com/TrustWiseAgent/GenTradeServer/actions/workflows/pylint.yml)
 
+# GenTrade Server
 
 ## Quick Start
 
