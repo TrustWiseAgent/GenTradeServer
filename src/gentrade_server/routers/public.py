@@ -55,10 +55,8 @@ async def get_server_time():
     curr_ts = time.time()
     now_utc   = datetime.datetime.fromtimestamp(curr_ts, datetime.UTC)
     tl = tzlocal()
-    ntp_offset = sync_ntp_server()
 
     return {
-        'ntp_offset': ntp_offset,
         'timezone_name': tl.tzname(now_utc),
         'timezone_offset': tl.utcoffset(now_utc).total_seconds(),
         'timestamp_server': int(curr_ts)
