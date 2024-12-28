@@ -10,7 +10,6 @@ from dateutil.tz import tzlocal
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from ..util import sync_ntp_server
 from ..config import settings
 
 LOG = logging.getLogger(__name__)
