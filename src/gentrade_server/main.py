@@ -8,9 +8,9 @@ import uvicorn
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import secure, public
+from .routers import secure, public, agent
 from .auth import get_user
-from .util import sync_ntp_server
+from .util import check_server_time
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 LOG = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ async def lifespan(_:FastAPI):
     App lifecycle
     """
     LOG.info("Starting Up...")
-    sync_ntp_server()
+    check_server_time()
     yield
     LOG.info("Shutting Down...")
 
@@ -42,6 +42,11 @@ app.include_router(
 app.include_router(
     secure.router,
     prefix="/api/v1/secure",
+    dependencies=[Depends(get_user)]
+)
+app.include_router(
+    agent.router,
+    prefix="/api/v1/agent",
     dependencies=[Depends(get_user)]
 )
 

@@ -6,7 +6,7 @@ import ntplib
 
 LOG = logging.getLogger(__name__)
 
-def sync_ntp_server() -> float:
+def check_server_time() -> float:
     """
     Sync with NTP server
 
@@ -23,7 +23,7 @@ def sync_ntp_server() -> float:
             ret = client.request(ntp_servers[retry], version=3)
             offset = (ret.recv_time - ret.orig_time +
                     ret.dest_time - ret.tx_time) / 2
-            LOG.info("NTP offset: %.2f", offset)
+            LOG.info("NTP offset: %.2f seconds", offset)
             return offset
         except ntplib.NTPException:
             LOG.error("Fail to get time, try another")
