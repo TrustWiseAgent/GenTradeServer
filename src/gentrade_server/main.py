@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .routers import secure, public, agent
 from .auth import get_user
 from .util import check_server_time
+from .config import settings
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 LOG = logging.getLogger(__name__)
@@ -21,6 +22,7 @@ async def lifespan(_:FastAPI):
     App lifecycle
     """
     LOG.info("Starting Up...")
+    LOG.info(settings)
     check_server_time()
     yield
     LOG.info("Shutting Down...")

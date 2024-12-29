@@ -5,3 +5,4 @@ pydantic-settings
 ntplib
 python-dateutil
 python-dotenv
+openai

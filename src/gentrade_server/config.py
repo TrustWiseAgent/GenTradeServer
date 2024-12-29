@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     """
     Settings
     """
-    ntp_server: str = "ntp.ntsc.ac.cn"
+    OPENAI_API_KEY: str = ""
+    OPENAI_API_URL: str = ""
+    OPENAI_API_MODEL: str = "gpt-3.5-turbo"
 
 settings = Settings()
