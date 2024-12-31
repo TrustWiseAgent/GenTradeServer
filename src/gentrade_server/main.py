@@ -1,6 +1,7 @@
 """
 The main entry
 """
+import sys
 import logging
 from contextlib import asynccontextmanager
 
@@ -28,6 +29,13 @@ async def lifespan(_:FastAPI):
     check_server_time()
     yield
     LOG.info("Shutting Down...")
+
+def receive_signal(number, _):
+    """
+    Quit on Control + C
+    """
+    LOG.info('Received Signal: %d', number)
+    sys.exit()
 
 app = FastAPI()
 app = FastAPI(lifespan=lifespan)
