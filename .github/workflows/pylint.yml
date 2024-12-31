@@ -29,5 +29,6 @@ jobs:
       - name: Analyzing the python code
         run: |
           set -ex
-          export PYTHONPATH=$PWD/src/tia/
+          pip3 install gentrade
+          export PYTHONPATH=$PWD/src/
           find . -type f -name "*.py" | xargs pylint

@@ -12,6 +12,7 @@ from .routers import secure, public, agent
 from .auth import get_user
 from .util import check_server_time
 from .config import settings
+from .datahub import DataHub
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 LOG = logging.getLogger(__name__)
@@ -23,6 +24,7 @@ async def lifespan(_:FastAPI):
     """
     LOG.info("Starting Up...")
     LOG.info(settings)
+    DataHub.inst().init()
     check_server_time()
     yield
     LOG.info("Shutting Down...")
