@@ -6,6 +6,7 @@ ENV PIP_MIRROR="-i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 ENV GENTRADE_CACHE_DIR="/app/cache/"
 
 ADD . /app/GenTradeServer
+ADD cache /app/cache/
 RUN git clone https://github.com/TrustWiseAgent/GenTrade /app/GenTrade
 
 ENV PYTHONPATH=/app/GenTrade/src/:/app/GenTradeServer/src/
