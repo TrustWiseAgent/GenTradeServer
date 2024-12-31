@@ -15,7 +15,6 @@ ENV PYTHONPATH=/app/GenTradeServer/src/
 VOLUME [ "/app/cache/" ]
 WORKDIR /app/GenTradeServer/src/
 
-RUN pip install ${PIP_MIRROR} -r /app/GenTrade/requirements.txt
 RUN pip install ${PIP_MIRROR} -r /app/GenTradeServer/requirements.txt
 
 
