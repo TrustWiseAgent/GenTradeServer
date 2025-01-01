@@ -8,7 +8,7 @@ ENV GENTRADE_CACHE_DIR=/app/cache/
 ADD . /app/GenTradeServer
 ADD cache /app/cache/
 
-RUN pip install gentrade==0.0.19
+RUN pip install gentrade==0.0.20
 
 ENV PYTHONPATH=/app/GenTradeServer/src/
 
