@@ -18,6 +18,7 @@
         "Pylint",
         "gentrade",
         "aliyuncs",
-        "kenplusplus"
+        "kenplusplus",
+        "OPENAI"
     ]
 }

@@ -24,7 +24,7 @@ After starting the server, please test restful API via <http://127.0.0.1:8000/do
 
 ## Setup Environment Variable
 
-It dependends on following environment variable, please use `export` or create a
+It depends on following environment variable, please use `export` or create a
 new `.env` file from [.env.template](./.env.template), and pass it into docker
 via `--env-file`
 
