@@ -10,19 +10,14 @@ class HealthCheck(BaseModel):
     """
     Response model to validate and return when performing a health check.
     """
-
     status: str = Field("OK")
 
 class Settings(BaseSettings):
     """
     Settings
     """
-
     model_config = SettingsConfigDict(enable_decoding=False)
 
-    """
-    Settings
-    """
     openai_api_key: str = ""
     openai_api_url: str = ""
     openai_api_model: str = "gpt-3.5-turbo"
@@ -50,6 +45,28 @@ class Market(BaseModel):
     """
     Response model to validate and return when performing a health check.
     """
-
     name: str = Field(...)
     type: str = Field(...)
+
+class Asset(BaseModel):
+    """
+    Asset Model_
+    """
+    name: str = Field(...)
+    type: str = Field(...)
+    market: str = Field(...)
+    quote: str = Field(...)
+    cik: int = Field(None, description="only for US stock")
+    symbol: str = Field(None, description="only for crypto")
+    base: str = Field(None, description="only for crypto")
+
+class OHLCV(BaseModel):
+    """
+    OHLCV model
+    """
+    time: int = Field(..., description="UTC timestamp in seconds")
+    open: float = Field(...)
+    high: float = Field(...)
+    low: float = Field(...)
+    close: float = Field(...)
+    vol: float = Field(...)

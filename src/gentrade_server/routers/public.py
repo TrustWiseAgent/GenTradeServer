@@ -8,10 +8,10 @@ import json
 import datetime
 from dateutil.tz import tzlocal
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from ..datahub import DataHub
-from ..model import HealthCheck, Market
+from ..model import HealthCheck, Market, Asset, OHLCV
 
 LOG = logging.getLogger(__name__)
 
@@ -23,7 +23,6 @@ async def get_health() -> HealthCheck:
     Check health
     """
     return HealthCheck(status="OK")
-
 
 @router.get("/server_time")
 async def get_server_time():
@@ -40,8 +39,8 @@ async def get_server_time():
         'timestamp_server': int(curr_ts)
     }
 
-@router.get("/markets/")
-async def get_markets() -> Market:
+@router.get("/markets")
+async def get_markets() -> dict[str, Market]:
     """
     Get markets
     """
@@ -53,36 +52,33 @@ async def get_markets() -> Market:
         }
     return retval
 
-@router.get("/assets/")
-async def get_assets(market_id:str=""):
-    """
-    Get assets
-    """
-    ret = {}
-    markets = []
-    if len(market_id) != 0 and market_id not in DataHub.inst().markets:
-        LOG.error("could not find the market %s", market_id)
-        return ret
-    if len(market_id) == 0:
-        for id_ in DataHub.inst().markets:
-            markets.append(id_)
-    else:
-        markets.append(market_id)
+@router.get("/markets/{market_id}/assets")
+async def get_assets(market_id:str="b13a4902-ad9d-11ef-a239-00155d3ba217",
+                     start:int=0, limit:int=1000) -> list[Asset]:
+    """Get assets array, The maximus lenth is 1000
 
-    for id_ in markets:
-        market_inst = DataHub.inst().markets[id_]
-        for asset in market_inst.assets.values():
-            if market_inst.market_id == "b13a4902-ad9d-11ef-a239-00155d3ba217" and \
-                asset.asset_type == "spot":
-                ret[asset.name] = asset.to_dict()
-            elif market_inst.market_id == "5784f1f5-d8f6-401d-8d24-f685a3812f2d" and \
-                asset.asset_type == "stock":
-                ret[asset.name] = asset.to_dict()
-    return ret
+    Args:
+        market_id (str, optional): Market ID string. Defaults to
+        "b13a4902-ad9d-11ef-a239-00155d3ba217".
+        start (int, optional): Start index. Defaults to 0.
 
-@router.get("/asset/fetch_ohlcv/")
+    Returns:
+        dict[str, Asset]: _description_
+    """
+    markets = DataHub.inst().markets
+
+    if market_id not in markets:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    assets = list(markets[market_id].assets.values())
+
+    if start > len(assets) - 1:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return [item.to_dict() for item in assets[start:min(start + limit, len(assets))]]
+
+@router.get("/asset/fetch_ohlcv")
 async def fetch_ohlcv(assetname:str='btc_usdt', interval="1d",
-                      since:int=-1, to:int=-1,limit:int=300):
+                      since:int=-1, to:int=-1,limit:int=300) -> list[OHLCV]:
     """fetch ohlcv
 
     Args:
@@ -96,7 +92,7 @@ async def fetch_ohlcv(assetname:str='btc_usdt', interval="1d",
         _type_: _description_
     """
     retval = {}
-    LOG.info("fetch_ohlcv: %s", assetname)
+    LOG.info("fetch_ohlcv: %s, interval: %s", assetname, interval)
     asset = DataHub.inst().get_asset(assetname)
     if asset is not None:
         ret = asset.fetch_ohlcv(interval, since, to, limit)
