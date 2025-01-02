@@ -1,7 +1,10 @@
-from pydantic import BaseModel, Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field, field_validator
+"""
+Model
+"""
 from typing import List
+
+from pydantic import BaseModel, Field, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class HealthCheck(BaseModel):
     """
@@ -11,6 +14,10 @@ class HealthCheck(BaseModel):
     status: str = Field("OK")
 
 class Settings(BaseSettings):
+    """
+    Settings
+    """
+
     model_config = SettingsConfigDict(enable_decoding=False)
 
     """
@@ -27,6 +34,22 @@ class Settings(BaseSettings):
     @field_validator('ntp_servers', mode='before')
     @classmethod
     def decode_ntp_servers(cls, v: str) -> List[str]:
+        """decode function override
+
+        Args:
+            v (str): input string
+
+        Returns:
+            List[str]: splitted list for all NTP servers
+        """
         return v.split(',')
 
 settings = Settings()
+
+class Market(BaseModel):
+    """
+    Response model to validate and return when performing a health check.
+    """
+
+    name: str = Field(...)
+    type: str = Field(...)

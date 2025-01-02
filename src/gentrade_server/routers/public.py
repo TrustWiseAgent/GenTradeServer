@@ -9,10 +9,9 @@ import datetime
 from dateutil.tz import tzlocal
 
 from fastapi import APIRouter
-from pydantic import BaseModel, Field
 
 from ..datahub import DataHub
-from ..model import HealthCheck, settings
+from ..model import HealthCheck, Market
 
 LOG = logging.getLogger(__name__)
 
@@ -42,20 +41,7 @@ async def get_server_time():
     }
 
 @router.get("/markets/")
-async def get_markets():
-    """
-    Get markets
-    """
-    retval = {}
-    for _, market in DataHub.inst().markets.items():
-        retval[market.market_id] = {
-            "name": market.name,
-            "type": market.market_type,
-        }
-    return retval
-
-@router.get("/markets/")
-async def get_markets2():
+async def get_markets() -> Market:
     """
     Get markets
     """
