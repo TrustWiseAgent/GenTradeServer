@@ -9,10 +9,10 @@ import uvicorn
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import secure, public, agent
+from .routers import public, agent, admin
 from .auth import get_user
 from .util import check_server_time
-from .config import settings
+from .model import settings
 from .datahub import DataHub
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
@@ -51,14 +51,16 @@ app.include_router(
     public.router,
     prefix="/api/v1/public"
 )
-app.include_router(
-    secure.router,
-    prefix="/api/v1/secure",
-    dependencies=[Depends(get_user)]
-)
+
 app.include_router(
     agent.router,
     prefix="/api/v1/agent",
+    dependencies=[Depends(get_user)]
+)
+
+app.include_router(
+    admin.router,
+    prefix="/api/v1/admin",
     dependencies=[Depends(get_user)]
 )
 
